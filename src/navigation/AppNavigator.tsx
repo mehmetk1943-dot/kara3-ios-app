@@ -1,10 +1,12 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { TabNavigator } from './TabNavigator';
 
+// Spread DefaultTheme so the required `fonts` field (added in v7) is always present
 const navigationTheme = {
-  dark: false,
+  ...DefaultTheme,
   colors: {
+    ...DefaultTheme.colors,
     primary: '#0D8B83',
     background: '#FFFFFF',
     card: '#FFFFFF',
