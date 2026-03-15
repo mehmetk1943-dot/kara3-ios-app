@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
-  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -109,42 +108,43 @@ export const ProductDetailScreen: React.FC<Props> = ({ navigation, route }) => {
             <Ionicons name="chevron-back" size={22} color={Colors.textPrimary} />
           </TouchableOpacity>
 
-          {/* Wishlist button */}
-          <TouchableOpacity
-            style={styles.wishlistBtn}
-            onPress={() => toggleItem(product)}
-          >
-            <Ionicons
-              name={wishlisted ? 'heart' : 'heart-outline'}
-              size={22}
-              color={wishlisted ? Colors.gold : Colors.textPrimary}
-            />
-          </TouchableOpacity>
+          {/* Wishlist + share */}
+          <View style={styles.topRightBtns}>
+            <TouchableOpacity
+              style={styles.circleBtn}
+              onPress={() => toggleItem(product)}
+            >
+              <Ionicons
+                name={wishlisted ? 'heart' : 'heart-outline'}
+                size={20}
+                color={wishlisted ? Colors.teal : Colors.textSecondary}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.circleBtn}>
+              <Ionicons name="share-outline" size={20} color={Colors.textSecondary} />
+            </TouchableOpacity>
+          </View>
 
           {/* Labels */}
-          <View style={styles.imageBadges}>
-            {product.isNewArrival && (
-              <View style={styles.newBadge}>
-                <Text style={styles.newBadgeText}>NEW</Text>
-              </View>
-            )}
-          </View>
+          {product.isNewArrival && (
+            <View style={styles.imageBadge}>
+              <Text style={styles.imageBadgeText}>NEW</Text>
+            </View>
+          )}
         </View>
 
         {/* Product Info */}
         <View style={styles.info}>
-          {/* Title & price */}
-          <View style={styles.titleRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.type}>{product.productType}</Text>
-              <Text style={styles.title}>{product.title}</Text>
-            </View>
-            <View style={styles.priceBlock}>
-              <Text style={styles.price}>{formatPrice(selectedVariant?.price ?? product.defaultPrice)}</Text>
-              {product.compareAtPrice && (
-                <Text style={styles.comparePrice}>{formatPrice(product.compareAtPrice)}</Text>
-              )}
-            </View>
+          <Text style={styles.type}>{product.productType}</Text>
+          <Text style={styles.title}>{product.title}</Text>
+
+          <View style={styles.priceRow}>
+            <Text style={styles.price}>
+              {formatPrice(selectedVariant?.price ?? product.defaultPrice)}
+            </Text>
+            {product.compareAtPrice && (
+              <Text style={styles.comparePrice}>{formatPrice(product.compareAtPrice)}</Text>
+            )}
           </View>
 
           <GoldDivider marginVertical={Spacing.base} />
@@ -155,7 +155,7 @@ export const ProductDetailScreen: React.FC<Props> = ({ navigation, route }) => {
           {/* Material */}
           {product.material && (
             <View style={styles.metaRow}>
-              <Ionicons name="diamond-outline" size={14} color={Colors.gold} />
+              <Ionicons name="diamond-outline" size={14} color={Colors.teal} />
               <Text style={styles.metaText}>{product.material}</Text>
             </View>
           )}
@@ -207,7 +207,7 @@ export const ProductDetailScreen: React.FC<Props> = ({ navigation, route }) => {
       {/* Sticky bottom CTA */}
       <SafeAreaView edges={['bottom']} style={styles.ctaContainer}>
         <GoldButton
-          label={addedToCart ? 'Added to Bag ✓' : inCart ? 'Add Another' : 'Add to Bag'}
+          label={addedToCart ? 'Added to Bag' : inCart ? 'Add Another' : 'Add to Bag'}
           onPress={handleAddToCart}
           disabled={!selectedVariant?.available}
           style={styles.cta}
@@ -217,7 +217,7 @@ export const ProductDetailScreen: React.FC<Props> = ({ navigation, route }) => {
           style={styles.cartIcon}
           onPress={() => navigation.navigate('Cart')}
         >
-          <Ionicons name="bag-outline" size={22} color={Colors.gold} />
+          <Ionicons name="bag-outline" size={22} color={Colors.teal} />
         </TouchableOpacity>
       </SafeAreaView>
     </View>
@@ -232,18 +232,16 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
   },
-  content: {
-    // no horizontal padding — images are full-bleed
-  },
+  content: {},
   imageCarousel: {
     position: 'relative',
-    height: width * 1.1,
-    backgroundColor: Colors.card,
+    height: width * 1.15,
+    backgroundColor: Colors.surface,
   },
   image: {
     width,
-    height: width * 1.1,
-    backgroundColor: Colors.card,
+    height: width * 1.15,
+    backgroundColor: Colors.surface,
   },
   dots: {
     position: 'absolute',
@@ -258,11 +256,11 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   dotActive: {
-    backgroundColor: Colors.gold,
-    width: 18,
+    backgroundColor: Colors.teal,
+    width: 20,
   },
   backBtn: {
     position: 'absolute',
@@ -271,33 +269,36 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
     justifyContent: 'center',
+    ...Shadow.subtle,
   },
-  wishlistBtn: {
+  topRightBtns: {
     position: 'absolute',
     top: 52,
     right: Spacing.base,
+    gap: Spacing.sm,
+  },
+  circleBtn: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
     justifyContent: 'center',
+    ...Shadow.subtle,
   },
-  imageBadges: {
+  imageBadge: {
     position: 'absolute',
-    top: 52 + 40 + 8,
+    top: 100,
     left: Spacing.base,
-  },
-  newBadge: {
-    backgroundColor: Colors.gold,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    backgroundColor: Colors.teal,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
     borderRadius: 3,
   },
-  newBadgeText: {
+  imageBadgeText: {
     ...Typography.labelSmall,
     color: Colors.textInverse,
     fontSize: 9,
@@ -306,15 +307,11 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: Spacing.base,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
+    paddingTop: Spacing.lg,
   },
   type: {
     ...Typography.caption,
-    color: Colors.gold,
+    color: Colors.teal,
     textTransform: 'uppercase',
     letterSpacing: 2,
     marginBottom: 4,
@@ -322,15 +319,16 @@ const styles = StyleSheet.create({
   title: {
     ...Typography.h1,
     color: Colors.textPrimary,
-    flex: 1,
-    paddingRight: Spacing.sm,
+    marginBottom: Spacing.md,
   },
-  priceBlock: {
-    alignItems: 'flex-end',
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
   },
   price: {
     ...Typography.priceLarge,
-    color: Colors.gold,
+    color: Colors.textPrimary,
   },
   comparePrice: {
     ...Typography.body,
@@ -366,17 +364,17 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   variantChip: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.base,
+    paddingVertical: Spacing.sm + 2,
     borderRadius: BorderRadius.sm,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: Colors.border,
     position: 'relative',
     overflow: 'hidden',
   },
   variantChipActive: {
-    borderColor: Colors.gold,
-    backgroundColor: Colors.goldMuted,
+    borderColor: Colors.teal,
+    backgroundColor: Colors.tealMuted,
   },
   variantChipDisabled: {
     opacity: 0.4,
@@ -386,7 +384,8 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
   },
   variantTextActive: {
-    color: Colors.gold,
+    color: Colors.teal,
+    fontWeight: '600',
   },
   variantTextDisabled: {
     color: Colors.textMuted,
@@ -435,8 +434,8 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: BorderRadius.sm,
-    borderWidth: 1,
-    borderColor: Colors.gold,
+    borderWidth: 1.5,
+    borderColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
   },

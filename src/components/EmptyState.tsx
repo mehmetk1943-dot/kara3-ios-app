@@ -13,7 +13,7 @@ interface Props {
 export const EmptyState: React.FC<Props> = ({ icon, title, subtitle, action }) => (
   <View style={styles.container}>
     <View style={styles.iconWrap}>
-      <Ionicons name={icon} size={48} color={Colors.gold} />
+      <Ionicons name={icon} size={40} color={Colors.teal} />
     </View>
     <Text style={styles.title}>{title}</Text>
     {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: Colors.goldMuted,
+    backgroundColor: Colors.tealMuted,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.lg,

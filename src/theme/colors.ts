@@ -1,36 +1,43 @@
 export const Colors = {
-  // Backgrounds
-  background: '#080808',
-  surface: '#141414',
-  card: '#1C1C1E',
-  cardElevated: '#242424',
+  // Backgrounds — clean white/light
+  background: '#FFFFFF',
+  surface: '#F7F7F7',
+  card: '#FFFFFF',
+  cardElevated: '#F0F0F0',
 
-  // Gold Accents — Kara3 signature palette
-  gold: '#C9A84C',
-  goldLight: '#E5C76B',
-  goldDark: '#A07C2D',
-  goldMuted: '#C9A84C33', // gold at 20% opacity
+  // Kara3 Brand — teal/turquoise (matched from storefront)
+  teal: '#0D8B83',
+  tealLight: '#15A89F',
+  tealDark: '#0A736C',
+  tealMuted: 'rgba(13,139,131,0.10)', // teal at 10% opacity
+  tealSoft: 'rgba(13,139,131,0.06)',
 
   // Text
-  textPrimary: '#FFFFFF',
-  textSecondary: '#9A9A9A',
-  textMuted: '#5A5A5A',
-  textInverse: '#080808',
+  textPrimary: '#1A1A1A',
+  textSecondary: '#6B6B6B',
+  textMuted: '#9E9E9E',
+  textInverse: '#FFFFFF',
 
   // UI
-  border: '#2C2C2E',
-  borderSubtle: '#1E1E20',
-  divider: '#1E1E20',
+  border: '#E8E8E8',
+  borderSubtle: '#F0F0F0',
+  divider: '#ECECEC',
 
   // Semantic
-  success: '#30D158',
-  error: '#FF453A',
-  warning: '#FFD60A',
+  success: '#2ECC71',
+  error: '#E74C3C',
+  warning: '#F39C12',
 
   // Overlay
-  overlay: 'rgba(0,0,0,0.75)',
-  overlayLight: 'rgba(0,0,0,0.4)',
+  overlay: 'rgba(0,0,0,0.55)',
+  overlayLight: 'rgba(0,0,0,0.25)',
 
   // Transparent
   transparent: 'transparent',
+
+  // Legacy aliases (so components compile — mapped to new palette)
+  gold: '#0D8B83',
+  goldLight: '#15A89F',
+  goldDark: '#0A736C',
+  goldMuted: 'rgba(13,139,131,0.10)',
 };

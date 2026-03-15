@@ -42,7 +42,7 @@ export default function App() {
       <SafeAreaProvider>
         <CartProvider>
           <WishlistProvider>
-            <StatusBar style="light" />
+            <StatusBar style="dark" />
             {showCustomSplash ? (
               <SplashScreen onFinish={handleSplashFinish} />
             ) : (

@@ -10,7 +10,7 @@ interface Props {
 
 export const LoadingSpinner: React.FC<Props> = ({
   size = 'large',
-  color = Colors.gold,
+  color = Colors.teal,
   fullScreen = false,
 }) => {
   if (fullScreen) {

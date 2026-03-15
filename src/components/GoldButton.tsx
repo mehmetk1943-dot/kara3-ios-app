@@ -7,7 +7,7 @@ import {
   TouchableOpacityProps,
   View,
 } from 'react-native';
-import { Colors, Typography, BorderRadius, Spacing } from '../theme';
+import { Colors, Typography, BorderRadius, Spacing, Shadow } from '../theme';
 
 interface Props extends TouchableOpacityProps {
   label: string;
@@ -31,7 +31,7 @@ export const GoldButton: React.FC<Props> = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.75}
+      activeOpacity={0.8}
       disabled={isDisabled}
       style={[
         styles.base,
@@ -45,7 +45,7 @@ export const GoldButton: React.FC<Props> = ({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' ? Colors.textInverse : Colors.gold}
+          color={variant === 'primary' ? Colors.textInverse : Colors.teal}
         />
       ) : (
         <View style={styles.row}>
@@ -82,12 +82,13 @@ const styles = StyleSheet.create({
 
   // Variants
   primary: {
-    backgroundColor: Colors.gold,
+    backgroundColor: Colors.teal,
+    ...Shadow.teal,
   },
   outline: {
     backgroundColor: Colors.transparent,
-    borderWidth: 1,
-    borderColor: Colors.gold,
+    borderWidth: 1.5,
+    borderColor: Colors.teal,
   },
   ghost: {
     backgroundColor: Colors.transparent,
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.base,
   },
   size_md: {
-    paddingVertical: Spacing.md,
+    paddingVertical: Spacing.md + 2,
     paddingHorizontal: Spacing.xl,
   },
   size_lg: {
@@ -110,20 +111,20 @@ const styles = StyleSheet.create({
   // Labels
   label: {
     ...Typography.labelLarge,
-    letterSpacing: 1,
+    letterSpacing: 1.5,
     textTransform: 'uppercase',
   },
   labelPrimary: {
     color: Colors.textInverse,
   },
   labelOutline: {
-    color: Colors.gold,
+    color: Colors.teal,
   },
   labelSm: {
     fontSize: 12,
   },
   labelLg: {
-    fontSize: 16,
+    fontSize: 15,
   },
 
   disabled: {

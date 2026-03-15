@@ -14,7 +14,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SearchStackParamList, Product } from '../types';
 import { searchProducts } from '../services/shopify';
 import { Colors, Typography, Spacing, BorderRadius } from '../theme';
-import { ProductCard, EmptyState, LoadingSpinner } from '../components';
+import { ProductCard, EmptyState, LoadingSpinner, Kara3Logo } from '../components';
 
 type Props = NativeStackScreenProps<SearchStackParamList, 'Search'>;
 
@@ -67,7 +67,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView style={styles.safe} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.eyebrow}>KARA3</Text>
+        <Kara3Logo size="sm" color={Colors.teal} />
         <Text style={styles.title}>Search</Text>
       </View>
 
@@ -104,7 +104,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
                 style={styles.chip}
                 onPress={() => handleSuggestion(term)}
               >
-                <Ionicons name="trending-up-outline" size={13} color={Colors.gold} />
+                <Ionicons name="trending-up-outline" size={13} color={Colors.teal} />
                 <Text style={styles.chipText}>{term}</Text>
               </TouchableOpacity>
             ))}
@@ -150,16 +150,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.base,
     paddingTop: Spacing.base,
     paddingBottom: Spacing.md,
-  },
-  eyebrow: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 4,
-    marginBottom: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    alignItems: 'center',
   },
   title: {
-    ...Typography.displayLarge,
+    ...Typography.displayMedium,
     color: Colors.textPrimary,
+    marginTop: Spacing.sm,
   },
   searchBar: {
     flexDirection: 'row',
@@ -167,8 +165,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     borderRadius: BorderRadius.md,
     marginHorizontal: Spacing.base,
+    marginTop: Spacing.base,
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm + 2,
+    paddingVertical: Spacing.sm + 4,
     borderWidth: 1,
     borderColor: Colors.border,
     marginBottom: Spacing.lg,

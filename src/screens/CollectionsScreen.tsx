@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CollectionsStackParamList, Collection } from '../types';
 import { getCollections } from '../services/shopify';
 import { Colors, Typography, Spacing } from '../theme';
-import { CollectionCard, LoadingSpinner, EmptyState } from '../components';
+import { CollectionCard, LoadingSpinner, EmptyState, Kara3Logo } from '../components';
 
 type Props = NativeStackScreenProps<CollectionsStackParamList, 'Collections'>;
 
@@ -25,7 +25,7 @@ export const CollectionsScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.eyebrow}>KARA3</Text>
+        <Kara3Logo size="sm" color={Colors.teal} />
         <Text style={styles.title}>Collections</Text>
       </View>
 
@@ -67,19 +67,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.base,
     paddingTop: Spacing.base,
     paddingBottom: Spacing.md,
-  },
-  eyebrow: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 4,
-    marginBottom: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    alignItems: 'center',
   },
   title: {
-    ...Typography.displayLarge,
+    ...Typography.displayMedium,
     color: Colors.textPrimary,
+    marginTop: Spacing.sm,
   },
   list: {
     paddingHorizontal: Spacing.base,
+    paddingTop: Spacing.base,
     paddingBottom: Spacing.xxl,
   },
 });

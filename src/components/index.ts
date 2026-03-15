@@ -6,3 +6,4 @@ export { ProductCard } from './ProductCard';
 export { CollectionCard } from './CollectionCard';
 export { CartItemRow } from './CartItemRow';
 export { GoldDivider } from './GoldDivider';
+export { Kara3Logo } from './Kara3Logo';

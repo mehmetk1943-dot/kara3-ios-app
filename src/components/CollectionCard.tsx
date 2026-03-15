@@ -20,28 +20,26 @@ interface Props {
 }
 
 export const CollectionCard: React.FC<Props> = ({ collection, onPress, compact = false }) => {
-  const cardHeight = compact ? 120 : 180;
+  const cardHeight = compact ? 130 : 200;
   const cardWidth = compact
     ? (width - Spacing.base * 2 - Spacing.md) / 2
     : width - Spacing.base * 2;
 
   return (
     <TouchableOpacity
-      activeOpacity={0.88}
+      activeOpacity={0.9}
       onPress={onPress}
       style={[styles.card, { width: cardWidth, height: cardHeight }]}
     >
       <Image
         source={{
-          uri:
-            collection.image ??
-            'https://via.placeholder.com/600x300/1C1C1E/C9A84C?text=Kara3',
+          uri: collection.image ?? 'https://via.placeholder.com/600x300/F0F0F0/0D8B83?text=Kara3',
         }}
         style={StyleSheet.absoluteFill}
         resizeMode="cover"
       />
       <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.75)']}
+        colors={['transparent', 'rgba(0,0,0,0.6)']}
         style={StyleSheet.absoluteFill}
       />
       <View style={styles.content}>
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: BorderRadius.md,
     overflow: 'hidden',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     marginBottom: Spacing.md,
     ...Shadow.card,
   },
@@ -69,19 +67,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: Spacing.md,
+    padding: Spacing.base,
   },
   title: {
-    ...Typography.h3,
-    color: Colors.textPrimary,
+    ...Typography.h2,
+    color: '#FFFFFF',
     marginBottom: 2,
   },
   titleCompact: {
-    fontSize: 14,
+    fontSize: 15,
   },
   count: {
     ...Typography.caption,
-    color: Colors.gold,
+    color: 'rgba(255,255,255,0.8)',
     textTransform: 'uppercase',
     letterSpacing: 1,
   },

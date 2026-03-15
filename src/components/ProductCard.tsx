@@ -19,7 +19,7 @@ const CARD_WIDTH = (width - Spacing.base * 2 - Spacing.md) / 2;
 interface Props {
   product: Product;
   onPress: () => void;
-  wide?: boolean; // full-width variant for list views
+  wide?: boolean;
 }
 
 export const ProductCard: React.FC<Props> = ({ product, onPress, wide = false }) => {
@@ -37,8 +37,8 @@ export const ProductCard: React.FC<Props> = ({ product, onPress, wide = false })
       {/* Image */}
       <View style={[styles.imageWrap, { width: cardWidth }]}>
         <Image
-          source={{ uri: image?.url ?? 'https://via.placeholder.com/400x400/1C1C1E/C9A84C?text=Kara3' }}
-          style={[styles.image, { width: cardWidth, height: wide ? 240 : CARD_WIDTH }]}
+          source={{ uri: image?.url ?? 'https://via.placeholder.com/400x400/F0F0F0/0D8B83?text=Kara3' }}
+          style={[styles.image, { width: cardWidth, height: wide ? 240 : CARD_WIDTH * 1.15 }]}
           resizeMode="cover"
         />
         {/* Wishlist button */}
@@ -49,8 +49,8 @@ export const ProductCard: React.FC<Props> = ({ product, onPress, wide = false })
         >
           <Ionicons
             name={wishlisted ? 'heart' : 'heart-outline'}
-            size={20}
-            color={wishlisted ? Colors.gold : Colors.textPrimary}
+            size={18}
+            color={wishlisted ? Colors.teal : Colors.textSecondary}
           />
         </TouchableOpacity>
         {/* Labels */}
@@ -92,18 +92,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.card,
     borderRadius: BorderRadius.md,
     overflow: 'hidden',
-    marginBottom: Spacing.md,
-    ...Shadow.card,
+    marginBottom: Spacing.base,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   wideCard: {
     flexDirection: 'column',
   },
   imageWrap: {
     position: 'relative',
-    backgroundColor: Colors.cardElevated,
+    backgroundColor: Colors.surface,
   },
   image: {
-    backgroundColor: Colors.cardElevated,
+    backgroundColor: Colors.surface,
   },
   heartBtn: {
     position: 'absolute',
@@ -112,9 +113,10 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
     justifyContent: 'center',
+    ...Shadow.subtle,
   },
   labels: {
     position: 'absolute',
@@ -124,9 +126,9 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   newBadge: {
-    backgroundColor: Colors.gold,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    backgroundColor: Colors.teal,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 3,
   },
   newBadgeText: {
@@ -138,13 +140,13 @@ const styles = StyleSheet.create({
   },
   saleBadge: {
     backgroundColor: Colors.error,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 3,
   },
   saleBadgeText: {
     ...Typography.labelSmall,
-    color: Colors.textPrimary,
+    color: Colors.textInverse,
     fontSize: 9,
     fontWeight: '700',
     letterSpacing: 1,
@@ -159,8 +161,8 @@ const styles = StyleSheet.create({
   },
   type: {
     ...Typography.caption,
-    color: Colors.textSecondary,
-    marginBottom: Spacing.sm,
+    color: Colors.textMuted,
+    marginBottom: Spacing.xs,
     textTransform: 'uppercase',
     letterSpacing: 0.8,
   },
@@ -171,11 +173,12 @@ const styles = StyleSheet.create({
   },
   price: {
     ...Typography.price,
-    color: Colors.gold,
+    color: Colors.textPrimary,
   },
   comparePrice: {
     ...Typography.body,
     color: Colors.textMuted,
     textDecorationLine: 'line-through',
+    fontSize: 13,
   },
 });

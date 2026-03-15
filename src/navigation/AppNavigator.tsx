@@ -3,14 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { TabNavigator } from './TabNavigator';
 
 const navigationTheme = {
-  dark: true,
+  dark: false,
   colors: {
-    primary: '#C9A84C',
-    background: '#080808',
-    card: '#141414',
-    text: '#FFFFFF',
-    border: '#2C2C2E',
-    notification: '#C9A84C',
+    primary: '#0D8B83',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    text: '#1A1A1A',
+    border: '#E8E8E8',
+    notification: '#0D8B83',
   },
 };
 

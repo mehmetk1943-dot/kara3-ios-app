@@ -15,15 +15,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../types';
 import { Product, Collection } from '../types';
-import { getFeaturedProducts, getNewArrivals } from '../services/shopify';
-import { getCollections } from '../services/shopify';
+import { getFeaturedProducts, getNewArrivals, getCollections } from '../services/shopify';
 import { Colors, Typography, Spacing, BorderRadius } from '../theme';
-import { ProductCard, CollectionCard, LoadingSpinner, GoldDivider } from '../components';
+import { ProductCard, CollectionCard, LoadingSpinner, GoldDivider, Kara3Logo } from '../components';
 import { useCart } from '../context/CartContext';
 import { Badge } from '../components/Badge';
 
 const { width } = Dimensions.get('window');
-const HERO_HEIGHT = 320;
+const HERO_HEIGHT = 420;
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -60,30 +59,46 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      {/* ── Top Header Bar — matches Kara3 storefront ── */}
+      <View style={styles.headerBar}>
+        <TouchableOpacity style={styles.headerIcon}>
+          <Ionicons name="menu-outline" size={24} color={Colors.textPrimary} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.headerIcon}>
+          <Ionicons name="search-outline" size={22} color={Colors.textPrimary} />
+        </TouchableOpacity>
+
+        <Kara3Logo size="md" color={Colors.teal} />
+
+        <View style={{ width: 24 }} />
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Cart')}
+          style={styles.headerIcon}
+        >
+          <Ionicons name="bag-outline" size={22} color={Colors.textPrimary} />
+          <Badge count={cart.itemCount} />
+        </TouchableOpacity>
+      </View>
+
+      {/* ── Promo Banner — matches storefront teal bar ── */}
+      <View style={styles.promoBanner}>
+        <Text style={styles.promoText}>
+          Mid-Season Sale Up to 70% OFF.{' '}
+          <Text style={styles.promoLink}>Shop Now</Text>
+        </Text>
+      </View>
+
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.brandSmall}>KARA3</Text>
-            <Text style={styles.greeting}>Fine Jewelry</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={styles.cartBtn}
-          >
-            <Ionicons name="bag-outline" size={24} color={Colors.textPrimary} />
-            <Badge count={cart.itemCount} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Hero Banner */}
+        {/* ── Hero Banner — full bleed with model image ── */}
         {heroProduct && (
           <TouchableOpacity
-            activeOpacity={0.92}
+            activeOpacity={0.95}
             style={styles.hero}
             onPress={() => goToProduct(heroProduct.id)}
           >
@@ -93,82 +108,91 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
               resizeMode="cover"
             />
             <LinearGradient
-              colors={['transparent', 'rgba(8,8,8,0.9)']}
+              colors={['transparent', 'rgba(0,0,0,0.55)']}
               style={styles.heroGradient}
+              start={{ x: 0.5, y: 0.3 }}
+              end={{ x: 0.5, y: 1 }}
             />
             <View style={styles.heroContent}>
-              <Text style={styles.heroLabel}>FEATURED PIECE</Text>
-              <Text style={styles.heroTitle}>{heroProduct.title}</Text>
-              <View style={styles.heroBtn}>
-                <Text style={styles.heroBtnText}>DISCOVER</Text>
-                <Ionicons name="arrow-forward" size={14} color={Colors.textInverse} />
-              </View>
+              <Text style={styles.heroTitle}>Moissanite Elegance</Text>
+              <Text style={styles.heroSubtitle}>
+                Timeless brilliance crafted with precision — discover Kara3's women's moissanite jewelry.
+              </Text>
+              <TouchableOpacity
+                style={styles.heroBtn}
+                onPress={() => goToProduct(heroProduct.id)}
+              >
+                <Text style={styles.heroBtnText}>SHOP NOW</Text>
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         )}
 
-        <GoldDivider marginVertical={Spacing.xl} />
+        {/* ── Featured Products ── */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Featured</Text>
+            <TouchableOpacity>
+              <Text style={styles.sectionLink}>View all</Text>
+            </TouchableOpacity>
+          </View>
 
-        {/* Featured Products */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Featured</Text>
-          <TouchableOpacity>
-            <Text style={styles.sectionLink}>View all</Text>
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          data={featured}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(p) => p.id}
-          contentContainerStyle={styles.hScroll}
-          renderItem={({ item }) => (
-            <View style={styles.hCard}>
-              <ProductCard product={item} onPress={() => goToProduct(item.id)} />
-            </View>
-          )}
-        />
-
-        <GoldDivider marginVertical={Spacing.xl} />
-
-        {/* Collections Preview */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Collections</Text>
-        </View>
-
-        {collections.map((col) => (
-          <CollectionCard
-            key={col.id}
-            collection={col}
-            onPress={() =>
-              (navigation as any)
-                .getParent()
-                ?.navigate('CollectionsTab', {
-                  screen: 'ProductList',
-                  params: { collectionId: col.id, collectionTitle: col.title },
-                })
-            }
+          <FlatList
+            data={featured}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(p) => p.id}
+            contentContainerStyle={styles.hScroll}
+            renderItem={({ item }) => (
+              <View style={styles.hCard}>
+                <ProductCard product={item} onPress={() => goToProduct(item.id)} />
+              </View>
+            )}
           />
-        ))}
-
-        <GoldDivider marginVertical={Spacing.xl} />
-
-        {/* New Arrivals */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>New Arrivals</Text>
         </View>
 
-        {newArrivals.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onPress={() => goToProduct(product.id)}
-            wide
-          />
-        ))}
+        <GoldDivider marginVertical={Spacing.lg} />
 
-        {/* Bottom spacer */}
+        {/* ── Collections Preview ── */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Collections</Text>
+          </View>
+
+          {collections.map((col) => (
+            <CollectionCard
+              key={col.id}
+              collection={col}
+              onPress={() =>
+                (navigation as any)
+                  .getParent()
+                  ?.navigate('CollectionsTab', {
+                    screen: 'ProductList',
+                    params: { collectionId: col.id, collectionTitle: col.title },
+                  })
+              }
+            />
+          ))}
+        </View>
+
+        <GoldDivider marginVertical={Spacing.lg} />
+
+        {/* ── New Arrivals ── */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>New Arrivals</Text>
+          </View>
+
+          {newArrivals.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onPress={() => goToProduct(product.id)}
+              wide
+            />
+          ))}
+        </View>
+
         <View style={{ height: Spacing.xxl }} />
       </ScrollView>
     </SafeAreaView>
@@ -180,36 +204,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  scroll: {
-    flex: 1,
-  },
-  content: {
-    paddingHorizontal: Spacing.base,
-  },
-  header: {
+  // ── Header bar matching storefront ──
+  headerBar: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: Spacing.base,
+    paddingHorizontal: Spacing.base,
+    paddingVertical: Spacing.md,
+    backgroundColor: Colors.background,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
-  brandSmall: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 4,
-  },
-  greeting: {
-    ...Typography.h1,
-    color: Colors.textPrimary,
-  },
-  cartBtn: {
+  headerIcon: {
     position: 'relative',
-    padding: Spacing.sm,
+    padding: 4,
   },
+  // ── Promo banner — teal bar ──
+  promoBanner: {
+    backgroundColor: Colors.teal,
+    paddingVertical: Spacing.sm + 2,
+    alignItems: 'center',
+  },
+  promoText: {
+    ...Typography.caption,
+    color: Colors.textInverse,
+    letterSpacing: 0.3,
+  },
+  promoLink: {
+    fontWeight: '700',
+    textDecorationLine: 'underline',
+  },
+  scroll: {
+    flex: 1,
+  },
+  content: {},
+  // ── Hero ──
   hero: {
     height: HERO_HEIGHT,
-    borderRadius: BorderRadius.lg,
-    overflow: 'hidden',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
   },
   heroImage: {
     ...StyleSheet.absoluteFillObject,
@@ -221,36 +253,41 @@ const styles = StyleSheet.create({
   },
   heroContent: {
     position: 'absolute',
-    bottom: Spacing.xl,
-    left: Spacing.xl,
-    right: Spacing.xl,
-  },
-  heroLabel: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 3,
-    marginBottom: Spacing.sm,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: Spacing.xxl,
+    paddingBottom: Spacing.xxl,
   },
   heroTitle: {
-    ...Typography.displayMedium,
-    color: Colors.textPrimary,
-    marginBottom: Spacing.base,
+    ...Typography.heroHeading,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: Spacing.sm,
+  },
+  heroSubtitle: {
+    ...Typography.body,
+    color: 'rgba(255,255,255,0.85)',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: Spacing.lg,
   },
   heroBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    backgroundColor: Colors.gold,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.base,
-    borderRadius: BorderRadius.xs,
-    gap: Spacing.sm,
+    backgroundColor: Colors.teal,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.xxl + 8,
+    borderRadius: BorderRadius.sm,
   },
   heroBtnText: {
-    ...Typography.labelSmall,
+    ...Typography.labelLarge,
     color: Colors.textInverse,
     letterSpacing: 2,
-    fontWeight: '700',
+  },
+  // ── Sections ──
+  section: {
+    paddingHorizontal: Spacing.base,
+    paddingTop: Spacing.lg,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -264,7 +301,7 @@ const styles = StyleSheet.create({
   },
   sectionLink: {
     ...Typography.label,
-    color: Colors.gold,
+    color: Colors.teal,
   },
   hScroll: {
     paddingRight: Spacing.base,

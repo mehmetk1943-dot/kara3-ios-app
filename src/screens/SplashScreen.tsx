@@ -6,8 +6,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, Typography, Spacing } from '../theme';
+import { Kara3Logo } from '../components/Kara3Logo';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +17,7 @@ interface Props {
 
 export const SplashScreen: React.FC<Props> = ({ onFinish }) => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
-  const logoScale = useRef(new Animated.Value(0.85)).current;
+  const logoScale = useRef(new Animated.Value(0.9)).current;
   const taglineOpacity = useRef(new Animated.Value(0)).current;
   const lineWidth = useRef(new Animated.Value(0)).current;
 
@@ -27,7 +27,7 @@ export const SplashScreen: React.FC<Props> = ({ onFinish }) => {
       Animated.parallel([
         Animated.timing(logoOpacity, {
           toValue: 1,
-          duration: 700,
+          duration: 600,
           useNativeDriver: true,
         }),
         Animated.spring(logoScale, {
@@ -37,30 +37,30 @@ export const SplashScreen: React.FC<Props> = ({ onFinish }) => {
           useNativeDriver: true,
         }),
       ]),
-      // Animate gold divider line
+      // Animate line
       Animated.timing(lineWidth, {
-        toValue: 80,
-        duration: 400,
+        toValue: 60,
+        duration: 350,
         useNativeDriver: false,
       }),
       // Tagline
       Animated.timing(taglineOpacity, {
         toValue: 1,
-        duration: 500,
+        duration: 400,
         useNativeDriver: true,
       }),
       // Hold
-      Animated.delay(800),
-      // Fade out everything
+      Animated.delay(700),
+      // Fade out
       Animated.parallel([
         Animated.timing(logoOpacity, {
           toValue: 0,
-          duration: 400,
+          duration: 350,
           useNativeDriver: true,
         }),
         Animated.timing(taglineOpacity, {
           toValue: 0,
-          duration: 400,
+          duration: 350,
           useNativeDriver: true,
         }),
       ]),
@@ -70,33 +70,23 @@ export const SplashScreen: React.FC<Props> = ({ onFinish }) => {
   }, []);
 
   return (
-    <LinearGradient
-      colors={[Colors.background, '#0F0A02', Colors.background]}
-      style={styles.container}
-      start={{ x: 0.3, y: 0 }}
-      end={{ x: 0.7, y: 1 }}
-    >
+    <View style={styles.container}>
       <Animated.View
         style={[
           styles.logoWrap,
           { opacity: logoOpacity, transform: [{ scale: logoScale }] },
         ]}
       >
-        {/* Brand mark — stylized K */}
-        <View style={styles.monogram}>
-          <Text style={styles.monogramText}>K</Text>
-        </View>
+        <Kara3Logo size="splash" color={Colors.teal} />
 
-        <Text style={styles.brand}>KARA3</Text>
-
-        {/* Gold line divider */}
-        <Animated.View style={[styles.goldLine, { width: lineWidth }]} />
+        {/* Animated line */}
+        <Animated.View style={[styles.line, { width: lineWidth }]} />
 
         <Animated.Text style={[styles.tagline, { opacity: taglineOpacity }]}>
           FINE JEWELRY
         </Animated.Text>
       </Animated.View>
-    </LinearGradient>
+    </View>
   );
 };
 
@@ -110,30 +100,10 @@ const styles = StyleSheet.create({
   logoWrap: {
     alignItems: 'center',
   },
-  monogram: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    borderWidth: 1.5,
-    borderColor: Colors.gold,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: Spacing.lg,
-  },
-  monogramText: {
-    fontSize: 36,
-    fontWeight: '300',
-    color: Colors.gold,
-    letterSpacing: 2,
-  },
-  brand: {
-    ...Typography.brandTitle,
-    color: Colors.textPrimary,
-    marginBottom: Spacing.md,
-  },
-  goldLine: {
+  line: {
     height: 1,
-    backgroundColor: Colors.gold,
+    backgroundColor: Colors.teal,
+    marginTop: Spacing.lg,
     marginBottom: Spacing.md,
   },
   tagline: {

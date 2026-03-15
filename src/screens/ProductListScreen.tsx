@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.base,
     paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
   backBtn: {
     width: 40,
@@ -148,15 +150,17 @@ const styles = StyleSheet.create({
   },
   count: {
     ...Typography.caption,
-    color: Colors.textSecondary,
+    color: Colors.textMuted,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   sortBar: {
     flexDirection: 'row',
     paddingHorizontal: Spacing.base,
-    paddingBottom: Spacing.md,
+    paddingVertical: Spacing.md,
     gap: Spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderSubtle,
   },
   sortChip: {
     paddingHorizontal: Spacing.md,
@@ -164,10 +168,11 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.full,
     borderWidth: 1,
     borderColor: Colors.border,
+    backgroundColor: Colors.background,
   },
   sortChipActive: {
-    backgroundColor: Colors.gold,
-    borderColor: Colors.gold,
+    backgroundColor: Colors.teal,
+    borderColor: Colors.teal,
   },
   sortLabel: {
     ...Typography.labelSmall,
@@ -181,6 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   list: {
+    paddingTop: Spacing.base,
     paddingBottom: Spacing.xxl,
   },
 });

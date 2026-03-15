@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WishlistStackParamList } from '../types';
 import { Colors, Typography, Spacing } from '../theme';
-import { ProductCard, EmptyState, GoldButton } from '../components';
+import { ProductCard, EmptyState, GoldButton, Kara3Logo } from '../components';
 import { useWishlist } from '../context/WishlistContext';
 
 type Props = NativeStackScreenProps<WishlistStackParamList, 'Wishlist'>;
@@ -25,7 +25,7 @@ export const WishlistScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.eyebrow}>KARA3</Text>
+        <Kara3Logo size="sm" color={Colors.teal} />
         <Text style={styles.title}>Wishlist</Text>
         {items.length > 0 && (
           <Text style={styles.count}>{items.length} saved piece{items.length !== 1 ? 's' : ''}</Text>
@@ -76,16 +76,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.base,
     paddingTop: Spacing.base,
     paddingBottom: Spacing.md,
-  },
-  eyebrow: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 4,
-    marginBottom: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    alignItems: 'center',
   },
   title: {
-    ...Typography.displayLarge,
+    ...Typography.displayMedium,
     color: Colors.textPrimary,
+    marginTop: Spacing.sm,
   },
   count: {
     ...Typography.caption,
@@ -99,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   list: {
+    paddingTop: Spacing.base,
     paddingBottom: Spacing.xxl,
   },
 });

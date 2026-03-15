@@ -9,26 +9,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, Typography, Spacing, BorderRadius } from '../theme';
-import { GoldButton, GoldDivider } from '../components';
-
-// ─── Profile Screen Placeholder ───────────────────────────────────────────────
-// This screen is ready to be wired to Shopify Customer Account API.
-//
-// TODO (Shopify): Connect these sections:
-//   - Sign in / Register → Shopify Customer Account API (OAuth 2.0)
-//   - Order History → customer { orders { edges { node { ... } } } }
-//   - Saved Addresses → customer { addresses { edges { node { ... } } } }
-//   - Account Settings → customerUpdate() mutation
-//
-// Shopify Customer Account API docs:
-//   https://shopify.dev/docs/api/customer
+import { Colors, Typography, Spacing, BorderRadius, Shadow } from '../theme';
+import { GoldButton, GoldDivider, Kara3Logo } from '../components';
 
 interface MenuItem {
   icon: string;
   label: string;
   sublabel?: string;
-  badge?: string;
   onPress: () => void;
 }
 
@@ -108,14 +95,14 @@ export const ProfileScreen: React.FC = () => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.eyebrow}>KARA3</Text>
+          <Kara3Logo size="sm" color={Colors.teal} />
           <Text style={styles.title}>Profile</Text>
         </View>
 
         {/* Guest state */}
         <View style={styles.guestCard}>
           <View style={styles.avatar}>
-            <Ionicons name="person-outline" size={32} color={Colors.gold} />
+            <Ionicons name="person-outline" size={32} color={Colors.teal} />
           </View>
           <Text style={styles.guestTitle}>Welcome to Kara3</Text>
           <Text style={styles.guestSubtitle}>
@@ -149,7 +136,7 @@ export const ProfileScreen: React.FC = () => {
                       <Ionicons
                         name={item.icon as any}
                         size={18}
-                        color={Colors.gold}
+                        color={Colors.teal}
                       />
                     </View>
                     <View style={styles.menuText}>
@@ -175,8 +162,8 @@ export const ProfileScreen: React.FC = () => {
 
         {/* App info */}
         <View style={styles.appInfo}>
-          <Text style={styles.appVersion}>Kara3 · Version 1.0.0</Text>
-          <Text style={styles.appSubtext}>Crafted with precision. Built for luxury.</Text>
+          <Kara3Logo size="sm" color={Colors.textMuted} showIcon={false} />
+          <Text style={styles.appVersion}>Version 1.0.0</Text>
         </View>
 
         <View style={{ height: Spacing.xxl }} />
@@ -199,30 +186,33 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: Spacing.base,
     paddingBottom: Spacing.md,
-  },
-  eyebrow: {
-    ...Typography.labelSmall,
-    color: Colors.gold,
-    letterSpacing: 4,
-    marginBottom: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    alignItems: 'center',
+    marginHorizontal: -Spacing.base,
+    paddingHorizontal: Spacing.base,
+    marginBottom: Spacing.lg,
   },
   title: {
-    ...Typography.displayLarge,
+    ...Typography.displayMedium,
     color: Colors.textPrimary,
+    marginTop: Spacing.sm,
   },
   guestCard: {
     alignItems: 'center',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: BorderRadius.lg,
     padding: Spacing.xl,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   avatar: {
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: Colors.goldMuted,
-    borderWidth: 1,
-    borderColor: Colors.gold,
+    backgroundColor: Colors.tealMuted,
+    borderWidth: 1.5,
+    borderColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.base,
@@ -248,7 +238,7 @@ const styles = StyleSheet.create({
   },
   registerText: {
     ...Typography.label,
-    color: Colors.gold,
+    color: Colors.teal,
     textDecorationLine: 'underline',
   },
   group: {
@@ -265,6 +255,8 @@ const styles = StyleSheet.create({
   groupCard: {
     backgroundColor: Colors.card,
     borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
     overflow: 'hidden',
   },
   menuItem: {
@@ -276,7 +268,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: BorderRadius.sm,
-    backgroundColor: Colors.goldMuted,
+    backgroundColor: Colors.tealMuted,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: Spacing.md,
@@ -296,20 +288,16 @@ const styles = StyleSheet.create({
   separator: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: Colors.border,
-    marginLeft: 16 + 32 + 12, // left pad + icon + gap
+    marginLeft: 16 + 32 + 12,
   },
   appInfo: {
     alignItems: 'center',
     paddingVertical: Spacing.lg,
+    gap: 4,
   },
   appVersion: {
     ...Typography.caption,
     color: Colors.textMuted,
-  },
-  appSubtext: {
-    ...Typography.caption,
-    color: Colors.textMuted,
-    marginTop: 4,
-    fontStyle: 'italic',
+    marginTop: Spacing.sm,
   },
 });

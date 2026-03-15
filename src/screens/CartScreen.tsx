@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../types';
 import { Colors, Typography, Spacing, BorderRadius } from '../theme';
-import { CartItemRow, EmptyState, GoldButton, GoldDivider } from '../components';
+import { CartItemRow, EmptyState, GoldButton, GoldDivider, Kara3Logo } from '../components';
 import { useCart } from '../context/CartContext';
 import { formatPrice } from '../services/shopify';
 
@@ -22,10 +22,6 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
   const { cart, clearCart } = useCart();
 
   const handleCheckout = () => {
-    // TODO (Shopify): Replace with:
-    //   1. Call shopifyService.getCheckoutUrl(cartId)
-    //   2. Open the returned URL with Linking.openURL(checkoutUrl)
-    //   OR use WebView for in-app checkout.
     Alert.alert(
       'Checkout',
       'Shopify checkout will be connected here.\n\nThis will redirect to your Shopify-hosted checkout page where customers can complete payment.',
@@ -40,7 +36,7 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
           </TouchableOpacity>
-          <Text style={styles.title}>Shopping Bag</Text>
+          <Text style={styles.headerTitle}>Shopping Bag</Text>
           <View style={{ width: 40 }} />
         </View>
         <EmptyState
@@ -61,18 +57,16 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.title}>Shopping Bag</Text>
+        <Text style={styles.headerTitle}>Shopping Bag</Text>
         <TouchableOpacity onPress={clearCart} style={styles.backBtn}>
           <Text style={styles.clearText}>Clear</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Item count */}
       <Text style={styles.itemCount}>
         {cart.itemCount} item{cart.itemCount !== 1 ? 's' : ''}
       </Text>
@@ -87,7 +81,6 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
           <View style={styles.summary}>
             <GoldDivider marginVertical={Spacing.lg} />
 
-            {/* Order summary rows */}
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Subtotal</Text>
               <Text style={styles.summaryValue}>{formatPrice(cart.subtotal)}</Text>
@@ -108,7 +101,6 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={styles.totalValue}>{formatPrice(cart.subtotal)}</Text>
             </View>
 
-            {/* Checkout CTA */}
             <GoldButton
               label="Proceed to Checkout"
               onPress={handleCheckout}
@@ -116,18 +108,17 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
               style={styles.checkoutBtn}
             />
 
-            {/* Trust signals */}
             <View style={styles.trustRow}>
               <View style={styles.trust}>
-                <Ionicons name="shield-checkmark-outline" size={14} color={Colors.textMuted} />
+                <Ionicons name="shield-checkmark-outline" size={14} color={Colors.teal} />
                 <Text style={styles.trustText}>Secure Payment</Text>
               </View>
               <View style={styles.trust}>
-                <Ionicons name="refresh-outline" size={14} color={Colors.textMuted} />
+                <Ionicons name="refresh-outline" size={14} color={Colors.teal} />
                 <Text style={styles.trustText}>Easy Returns</Text>
               </View>
               <View style={styles.trust}>
-                <Ionicons name="cube-outline" size={14} color={Colors.textMuted} />
+                <Ionicons name="cube-outline" size={14} color={Colors.teal} />
                 <Text style={styles.trustText}>Free Shipping</Text>
               </View>
             </View>
@@ -150,6 +141,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.base,
     paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
   backBtn: {
     width: 40,
@@ -157,8 +150,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    ...Typography.h2,
+  headerTitle: {
+    ...Typography.h3,
     color: Colors.textPrimary,
     flex: 1,
     textAlign: 'center',
@@ -173,14 +166,13 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1,
     paddingHorizontal: Spacing.base,
+    paddingTop: Spacing.md,
     marginBottom: Spacing.md,
   },
   list: {
     paddingHorizontal: Spacing.base,
   },
-  summary: {
-    paddingHorizontal: 0,
-  },
+  summary: {},
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -205,7 +197,7 @@ const styles = StyleSheet.create({
   },
   totalValue: {
     ...Typography.priceLarge,
-    color: Colors.gold,
+    color: Colors.textPrimary,
   },
   checkoutBtn: {
     marginTop: Spacing.xl,
@@ -224,6 +216,6 @@ const styles = StyleSheet.create({
   },
   trustText: {
     ...Typography.caption,
-    color: Colors.textMuted,
+    color: Colors.textSecondary,
   },
 });

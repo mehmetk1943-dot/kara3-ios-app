@@ -1,56 +1,37 @@
 import { Platform } from 'react-native';
 
-const fontFamily = Platform.select({
-  ios: {
-    thin: 'System',
-    light: 'System',
-    regular: 'System',
-    medium: 'System',
-    semibold: 'System',
-    bold: 'System',
-  },
-  default: {
-    thin: 'sans-serif-thin',
-    light: 'sans-serif-light',
-    regular: 'sans-serif',
-    medium: 'sans-serif-medium',
-    semibold: 'sans-serif-medium',
-    bold: 'sans-serif',
-  },
-});
-
 export const Typography = {
-  // Display
+  // Display — elegant, clean
   displayLarge: {
-    fontSize: 34,
-    fontWeight: '700' as const,
-    letterSpacing: 0.37,
-    lineHeight: 41,
+    fontSize: 32,
+    fontWeight: '300' as const,
+    letterSpacing: 0.5,
+    lineHeight: 40,
   },
   displayMedium: {
-    fontSize: 28,
-    fontWeight: '700' as const,
-    letterSpacing: 0.36,
+    fontSize: 26,
+    fontWeight: '300' as const,
+    letterSpacing: 0.4,
     lineHeight: 34,
   },
 
   // Headings
   h1: {
     fontSize: 24,
-    fontWeight: '700' as const,
-    letterSpacing: 0.35,
+    fontWeight: '600' as const,
+    letterSpacing: 0.2,
     lineHeight: 30,
   },
   h2: {
     fontSize: 20,
     fontWeight: '600' as const,
-    letterSpacing: 0.38,
-    lineHeight: 25,
+    letterSpacing: 0.15,
+    lineHeight: 26,
   },
   h3: {
     fontSize: 17,
     fontWeight: '600' as const,
-    letterSpacing: -0.41,
+    letterSpacing: 0,
     lineHeight: 22,
   },
 
@@ -58,19 +39,19 @@ export const Typography = {
   bodyLarge: {
     fontSize: 17,
     fontWeight: '400' as const,
-    letterSpacing: -0.41,
-    lineHeight: 24,
+    letterSpacing: -0.2,
+    lineHeight: 26,
   },
   body: {
     fontSize: 15,
     fontWeight: '400' as const,
-    letterSpacing: -0.24,
+    letterSpacing: -0.15,
     lineHeight: 22,
   },
   bodySmall: {
     fontSize: 13,
     fontWeight: '400' as const,
-    letterSpacing: -0.08,
+    letterSpacing: 0,
     lineHeight: 18,
   },
 
@@ -78,19 +59,19 @@ export const Typography = {
   labelLarge: {
     fontSize: 15,
     fontWeight: '600' as const,
-    letterSpacing: -0.24,
+    letterSpacing: -0.1,
     lineHeight: 20,
   },
   label: {
     fontSize: 13,
     fontWeight: '500' as const,
-    letterSpacing: 0.12,
+    letterSpacing: 0.1,
     lineHeight: 18,
   },
   labelSmall: {
     fontSize: 11,
     fontWeight: '500' as const,
-    letterSpacing: 0.07,
+    letterSpacing: 0.3,
     lineHeight: 14,
   },
 
@@ -102,25 +83,34 @@ export const Typography = {
     lineHeight: 16,
   },
 
-  // Price — special treatment
+  // Price
   price: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '600' as const,
-    letterSpacing: 0.35,
-    lineHeight: 24,
+    letterSpacing: 0.2,
+    lineHeight: 22,
   },
   priceLarge: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700' as const,
-    letterSpacing: 0.35,
-    lineHeight: 30,
+    letterSpacing: 0.2,
+    lineHeight: 28,
   },
 
-  // Brand / luxury labels
+  // Brand / luxury — elegant italic serif feel
   brandTitle: {
-    fontSize: 22,
+    fontSize: 20,
+    fontWeight: '400' as const,
+    letterSpacing: 2,
+    lineHeight: 26,
+  },
+
+  // Hero heading — matching storefront italic style
+  heroHeading: {
+    fontSize: 28,
     fontWeight: '300' as const,
-    letterSpacing: 6,
-    lineHeight: 28,
+    fontStyle: 'italic' as const,
+    letterSpacing: 0.3,
+    lineHeight: 36,
   },
 };

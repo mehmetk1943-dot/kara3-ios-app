@@ -17,14 +17,11 @@ export const CartItemRow: React.FC<Props> = ({ item }) => {
 
   return (
     <View style={styles.row}>
-      {/* Product Image */}
       <Image
-        source={{ uri: image?.url ?? 'https://via.placeholder.com/120x120/1C1C1E/C9A84C?text=K' }}
+        source={{ uri: image?.url ?? 'https://via.placeholder.com/120x120/F0F0F0/0D8B83?text=K' }}
         style={styles.image}
         resizeMode="cover"
       />
-
-      {/* Info */}
       <View style={styles.info}>
         <View style={styles.topRow}>
           <Text style={styles.title} numberOfLines={2}>
@@ -34,14 +31,13 @@ export const CartItemRow: React.FC<Props> = ({ item }) => {
             onPress={() => removeItem(item.product.id, item.variant.id)}
             hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
           >
-            <Ionicons name="trash-outline" size={18} color={Colors.textMuted} />
+            <Ionicons name="close" size={18} color={Colors.textMuted} />
           </TouchableOpacity>
         </View>
 
         <Text style={styles.variant}>{item.variant.title}</Text>
 
         <View style={styles.bottomRow}>
-          {/* Quantity stepper */}
           <View style={styles.stepper}>
             <TouchableOpacity
               style={styles.stepBtn}
@@ -80,11 +76,13 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     overflow: 'hidden',
     marginBottom: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   image: {
     width: 100,
-    height: 100,
-    backgroundColor: Colors.cardElevated,
+    height: 110,
+    backgroundColor: Colors.surface,
   },
   info: {
     flex: 1,
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
   },
   variant: {
     ...Typography.caption,
-    color: Colors.textSecondary,
+    color: Colors.textMuted,
     marginTop: 2,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -120,11 +118,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.surface,
     borderRadius: BorderRadius.sm,
+    borderWidth: 1,
+    borderColor: Colors.border,
     overflow: 'hidden',
   },
   stepBtn: {
     width: 30,
-    height: 30,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
   },
   price: {
     ...Typography.price,
-    color: Colors.gold,
+    color: Colors.textPrimary,
   },
 });

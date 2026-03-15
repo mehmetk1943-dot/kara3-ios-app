@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.goldMuted,
+    backgroundColor: Colors.border,
   },
   diamond: {
-    width: 6,
-    height: 6,
-    backgroundColor: Colors.gold,
+    width: 5,
+    height: 5,
+    backgroundColor: Colors.teal,
     transform: [{ rotate: '45deg' }],
     marginHorizontal: Spacing.sm,
   },

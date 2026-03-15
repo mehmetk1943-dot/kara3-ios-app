@@ -7,7 +7,7 @@ interface Props {
   color?: string;
 }
 
-export const Badge: React.FC<Props> = ({ count, color = Colors.gold }) => {
+export const Badge: React.FC<Props> = ({ count, color = Colors.teal }) => {
   if (count <= 0) return null;
   return (
     <View style={[styles.badge, { backgroundColor: color }]}>
