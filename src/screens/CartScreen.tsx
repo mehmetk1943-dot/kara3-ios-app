@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   FlatList,
+  Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,23 +15,42 @@ import { HomeStackParamList } from '../types';
 import { Colors, Typography, Spacing, BorderRadius } from '../theme';
 import { CartItemRow, EmptyState, GoldButton, GoldDivider } from '../components';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../services/shopify';
+import { formatPrice, createShopifyCart, isShopifyConfigured } from '../services/shopify';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Cart'>;
 
 export const CartScreen: React.FC<Props> = ({ navigation }) => {
   const { cart, clearCart } = useCart();
+  const [checkingOut, setCheckingOut] = useState(false);
 
-  const handleCheckout = () => {
-    // TODO (Shopify): Replace with:
-    //   1. Call shopifyService.getCheckoutUrl(cartId)
-    //   2. Open the returned URL with Linking.openURL(checkoutUrl)
-    //   OR use WebView for in-app checkout.
-    Alert.alert(
-      'Checkout',
-      'Shopify checkout will be connected here.\n\nThis will redirect to your Shopify-hosted checkout page where customers can complete payment.',
-      [{ text: 'Got it', style: 'default' }]
-    );
+  const handleCheckout = async () => {
+    if (!isShopifyConfigured) {
+      Alert.alert(
+        'Shopify Not Connected',
+        'Add your Shopify credentials to .env to enable checkout.\n\nSee .env.example for setup instructions.',
+        [{ text: 'Got it', style: 'default' }]
+      );
+      return;
+    }
+
+    setCheckingOut(true);
+    try {
+      const lines = cart.items.map((item) => ({
+        merchandiseId: item.variant.id,
+        quantity: item.quantity,
+      }));
+
+      const shopifyCart = await createShopifyCart(lines);
+      if (shopifyCart?.checkoutUrl) {
+        await Linking.openURL(shopifyCart.checkoutUrl);
+      } else {
+        Alert.alert('Checkout Error', 'Unable to create checkout. Please try again.');
+      }
+    } catch {
+      Alert.alert('Checkout Error', 'Something went wrong. Please try again.');
+    } finally {
+      setCheckingOut(false);
+    }
   };
 
   if (cart.items.length === 0) {
@@ -110,8 +130,9 @@ export const CartScreen: React.FC<Props> = ({ navigation }) => {
 
             {/* Checkout CTA */}
             <GoldButton
-              label="Proceed to Checkout"
+              label={checkingOut ? 'Creating Checkout...' : 'Proceed to Checkout'}
               onPress={handleCheckout}
+              disabled={checkingOut}
               size="lg"
               style={styles.checkoutBtn}
             />
