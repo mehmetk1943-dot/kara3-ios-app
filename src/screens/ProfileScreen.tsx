@@ -11,18 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, BorderRadius } from '../theme';
 import { GoldButton, GoldDivider } from '../components';
-
-// ─── Profile Screen Placeholder ───────────────────────────────────────────────
-// This screen is ready to be wired to Shopify Customer Account API.
-//
-// TODO (Shopify): Connect these sections:
-//   - Sign in / Register → Shopify Customer Account API (OAuth 2.0)
-//   - Order History → customer { orders { edges { node { ... } } } }
-//   - Saved Addresses → customer { addresses { edges { node { ... } } } }
-//   - Account Settings → customerUpdate() mutation
-//
-// Shopify Customer Account API docs:
-//   https://shopify.dev/docs/api/customer
+import { isShopifyConfigured } from '../services/shopify';
 
 interface MenuItem {
   icon: string;
@@ -177,6 +166,9 @@ export const ProfileScreen: React.FC = () => {
         <View style={styles.appInfo}>
           <Text style={styles.appVersion}>Kara3 · Version 1.0.0</Text>
           <Text style={styles.appSubtext}>Crafted with precision. Built for luxury.</Text>
+          <Text style={[styles.appSubtext, { color: isShopifyConfigured ? Colors.success : Colors.textMuted }]}>
+            {isShopifyConfigured ? 'Shopify Connected' : 'Shopify: Using demo data'}
+          </Text>
         </View>
 
         <View style={{ height: Spacing.xxl }} />
